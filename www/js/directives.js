@@ -21,7 +21,8 @@ var vmD;
             link: link,
             restrict: 'EA',
             scope: {},
-            template: '<span>{{vm.state}}</span>'
+            // template: '<span>{{vm.state}}</span>'
+            templateUrl: 'templates/check-network.html'
         };
         return directive;
 
@@ -35,6 +36,7 @@ var vmD;
         var vm = this;
         vmD = vm;
 
+        vm.isOnline = true;
         vm.state = 'online inicial true por default';
 
         $ionicPlatform.ready()
@@ -44,6 +46,7 @@ var vmD;
 
             function innerCheck(msg) {
                 vm.state = msg + $cordovaNetwork.isOnline();
+                vm.isOnline = $cordovaNetwork.isOnline();
                 console.log(vm.state);
             }
 
