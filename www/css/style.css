@@ -1,1 +1,14 @@
 /* Empty. Add your own CSS if you like */
+
+.row-justify-center {
+    justify-content: center;
+}
+
+.icon-x-large {
+    font-size: 12em;
+    color:blue;
+}
+
+.text-center{
+	text-align: center;
+}

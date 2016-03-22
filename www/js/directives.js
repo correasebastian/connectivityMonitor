@@ -72,10 +72,10 @@ var vmD;
         function link(scope, element, attrs) {}
     }
 
-    Controller.$inject = ['$rootScope', '$cordovaNetwork', '$ionicPlatform', 'CheckNetworkService']
+    Controller.$inject = ['CheckNetworkService']
 
     /* @ngInject */
-    function Controller($rootScope, $cordovaNetwork, $ionicPlatform, CheckNetworkService) {
+    function Controller(CheckNetworkService) {
         var vm = this;
         vmD = vm;
         // vm.cns = CheckNetworkService;

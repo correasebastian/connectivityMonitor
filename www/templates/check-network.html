@@ -1,12 +1,16 @@
-<div class="list card" ng-hide="vm.isOnline()">
-    <div class="item item-icon-left assertive">
+<div class="list card check-network-card">
+    <!-- ng-hide="vm.isOnline()" -->
+    <!--   <div class="item item-icon-left assertive">
         <i class="icon ion-wifi"></i> Check your connection and try again
     </div>
     <div class="item item-image">
         <img src="img/no-internet.png">
+    </div> -->
+    <div class="item row row-justify-center ">
+        <i class="icon ion-wifi icon-x-large"></i>
     </div>
     <div class="item ">
-        <h2>No network available</h2>
-        <p>{{vm.state}}</p>
+        <h2 class="text-center">OOPS!</h2>
+        <p class="text-center">check out you internet connection</p>
     </div>
 </div>
