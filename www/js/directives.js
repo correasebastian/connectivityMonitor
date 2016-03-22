@@ -4,7 +4,50 @@ var vmD;
 
     angular
         .module('starter.directives', ['ngCordova'])
-        .directive('checkNetwork', checkNetwork);
+        .directive('checkNetwork', checkNetwork)
+        .factory('CheckNetworkService', CheckNetworkService)
+
+    CheckNetworkService.$inject = ['$cordovaNetwork', '$ionicPlatform', '$rootScope'];
+
+    function CheckNetworkService($cordovaNetwork, $ionicPlatform, $rootScope) {
+        var _isOnline = true; //por defecto true
+
+        if (ionic.Platform.isWebView())
+            $ionicPlatform.ready().then(activate)
+
+        function activate() {
+
+            innerCheck('on activate is')
+
+            // listen for Online event
+            $rootScope.$on('$cordovaNetwork:online', function(event, networkState) {
+                innerCheck('$cordovaNetwork:online')
+            })
+
+            // listen for Offline event
+            $rootScope.$on('$cordovaNetwork:offline', function(event, networkState) {
+                innerCheck('$cordovaNetwork:offline')
+            })
+
+        }
+
+        function innerCheck(msg) {
+            console.log(msg + $cordovaNetwork.isOnline());
+            _isOnline = $cordovaNetwork.isOnline();
+
+        }
+        var fact = {
+            isOnline: isOnline
+
+        }
+
+        return fact;
+        /////fun
+
+        function isOnline() {
+            return _isOnline;
+        }
+    }
 
     checkNetwork.$inject = [];
 
@@ -29,41 +72,43 @@ var vmD;
         function link(scope, element, attrs) {}
     }
 
-    Controller.$inject = ['$rootScope', '$cordovaNetwork', '$ionicPlatform']
+    Controller.$inject = ['$rootScope', '$cordovaNetwork', '$ionicPlatform', 'CheckNetworkService']
 
     /* @ngInject */
-    function Controller($rootScope, $cordovaNetwork, $ionicPlatform) {
+    function Controller($rootScope, $cordovaNetwork, $ionicPlatform, CheckNetworkService) {
         var vm = this;
         vmD = vm;
+        // vm.cns = CheckNetworkService;
+        // vm.isOnline = true;
+        vm.isOnline = CheckNetworkService.isOnline;
 
-        vm.isOnline = true;
         vm.state = 'online inicial true por default';
 
-        $ionicPlatform.ready()
-            .then(activate)
+        /*   $ionicPlatform.ready()
+               .then(activate)
 
-        function activate() {
+           function activate() {
 
-            function innerCheck(msg) {
-                vm.state = msg + $cordovaNetwork.isOnline();
-                vm.isOnline = $cordovaNetwork.isOnline();
-                console.log(vm.state);
-            }
+               function innerCheck(msg) {
+                   vm.state = msg + $cordovaNetwork.isOnline();
+                   vm.isOnline = $cordovaNetwork.isOnline();
+                   console.log(vm.state);
+               }
 
 
-            innerCheck('on activate is')
+               innerCheck('on activate is')
 
-            // listen for Online event
-            $rootScope.$on('$cordovaNetwork:online', function(event, networkState) {
-                innerCheck('$cordovaNetwork:online')
-            })
+               // listen for Online event
+               $rootScope.$on('$cordovaNetwork:online', function(event, networkState) {
+                   innerCheck('$cordovaNetwork:online')
+               })
 
-            // listen for Offline event
-            $rootScope.$on('$cordovaNetwork:offline', function(event, networkState) {
-                innerCheck('$cordovaNetwork:offline')
-            })
+               // listen for Offline event
+               $rootScope.$on('$cordovaNetwork:offline', function(event, networkState) {
+                   innerCheck('$cordovaNetwork:offline')
+               })
 
-        }
+           }*/
 
     }
 })();
